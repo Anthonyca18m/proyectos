@@ -26,6 +26,7 @@
 - php artisan migrate:reset
 - php artisan migrate:refresh
 - php artisan migrate:refresh --seed
+- php artisan key:generate
 
 ## Extras
 
