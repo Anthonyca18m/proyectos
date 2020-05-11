@@ -21,19 +21,19 @@
 - php artisan make:request NAME_REQUEST
 
 ## Extras
-'debug' => env('APP_DEBUG', true)
+
+- 'debug' => env('APP_DEBUG', true)
 
  para que nos muestre errores ya que estamos en etapa de desarrollo, por defecto eso estara en modo false,
  una ves que publiquemos nuestra app lo cambiamos a false 
 
-
-'timezone' => 'UTC'
-'timezone' => 'America/Lima' // PERU lima
+- 'timezone' => 'UTC'
+- 'timezone' => 'America/Lima' // PERU lima
 
 Cambiamos la zona horarios dependiendo en que lugar estes, googleamos nomas el timezone
 https://www.php.net/manual/es/timezones.america.php
 
-'locale' => 'es',
+- 'locale' => 'es',
 
 Por defecto estara en modo en => ingles pero lo cambiamos al que nos acomodes
 https://github.com/Laraveles/spanish
