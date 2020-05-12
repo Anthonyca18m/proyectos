@@ -19,6 +19,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Google Font: Source Sans Pro -->
     {{-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        .router-link-exact-active{
+            background-color: #007bff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        }
+        .router-link-exact-active p{
+            color: #fff;
+        }
+        .router-link-exact-active i{
+            color: #fff;
+        }
+        .router-link-exact-active:hover{
+            background-color: #007bff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
