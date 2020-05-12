@@ -7,24 +7,26 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter)
 
 const Home = Vue.component('home-component', require('./components/ExampleComponent.vue').default);
+const Users = Vue.component('users-component', require('./components/UsersComponent.vue').default);
 
 const routes = [
-    { path: '/dashboard', name : 'Home', component: Home }
+    { path: '/dashboard', name : 'Home', component: Home },
+    { path: '/users', name : 'Users', component: Users }
     // REDIRECCIONANDO A PAGINAS POR DEFAULT
     // { path : '/registrarse', redirect : '/signup' },
-    // { path : '/*', redirect : '/home' }
+    // { path : '/*', redirect : '/' }
 ]
 
 const router = new VueRouter({
-    routes
+    routes,
+    // base: process.env.BASE_URL,
+    mode: 'history'
 })
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 const app = new Vue({
     el: '#app',
-    mode: 'history',
-    base: process.env.BASE_URL,
     router
 }).$mount('#app')
 

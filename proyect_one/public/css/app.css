@@ -10,7 +10,6 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -373,6 +372,7 @@ h1, h2, h3, h4, h5, h6,
   line-height: 1.2;
   color: inherit;
 }
+
 h1, .h1 {
   font-size: 2.5rem;
 }
