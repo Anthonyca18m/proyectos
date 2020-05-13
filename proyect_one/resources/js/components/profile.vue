@@ -96,7 +96,7 @@
                                                 <label for="" class="col-sm-2 col-form-label">Foto</label>
                                                 <div class="input-group col-sm-10">
                                                     <div class="custom-file ">
-                                                        <input type="file" class="custom-file-input">
+                                                        <input type="file" class="custom-file-input" @change="updatePhoto">
                                                         <label class="custom-file-label" for="">Choose file</label>
                                                     </div>
                                                 </div>
@@ -144,7 +144,7 @@
             }
         },
         methods: {
-            loadUser(){
+            loadUser (){
                 axios.get('api/profile')
                     .then( ({data}) => {
                         this.form.fill(data)
@@ -156,6 +156,17 @@
                             text: 'Recargue la página nuevamente!'
                         })
                     })
+            },
+            updatePhoto (e) {
+                // console.log("uploding")
+                let file = e.target.files[0]
+                let reader = new FileReader()
+                reader.onloadend = (file) => {
+                    this.form.photo = reader.result
+                    // console.log('RESULT', reader.result)
+                }
+
+                reader.readAsDataURL(file)
             }
         },
         created() {

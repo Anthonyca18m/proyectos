@@ -3333,6 +3333,19 @@ __webpack_require__.r(__webpack_exports__);
           text: 'Recargue la página nuevamente!'
         });
       });
+    },
+    updatePhoto: function updatePhoto(e) {
+      var _this2 = this;
+
+      // console.log("uploding")
+      var file = e.target.files[0];
+      var reader = new FileReader();
+
+      reader.onloadend = function (file) {
+        _this2.form.photo = reader.result; // console.log('RESULT', reader.result)
+      };
+
+      reader.readAsDataURL(file);
     }
   },
   created: function created() {
@@ -66821,11 +66834,39 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "col-sm-2 col-form-label",
+                              attrs: { for: "" }
+                            },
+                            [_vm._v("Foto")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "input-group col-sm-10" }, [
+                            _c("div", { staticClass: "custom-file " }, [
+                              _c("input", {
+                                staticClass: "custom-file-input",
+                                attrs: { type: "file" },
+                                on: { change: _vm.updatePhoto }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "custom-file-label",
+                                  attrs: { for: "" }
+                                },
+                                [_vm._v("Choose file")]
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
                         _vm._m(3),
                         _vm._v(" "),
-                        _vm._m(4),
-                        _vm._v(" "),
-                        _vm._m(5)
+                        _vm._m(4)
                       ])
                     ]
                   )
@@ -66949,33 +66990,6 @@ var staticRenderFns = [
               attrs: { href: "#settings", "data-toggle": "tab" }
             },
             [_vm._v("Settings")]
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        { staticClass: "col-sm-2 col-form-label", attrs: { for: "" } },
-        [_vm._v("Foto")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group col-sm-10" }, [
-        _c("div", { staticClass: "custom-file " }, [
-          _c("input", {
-            staticClass: "custom-file-input",
-            attrs: { type: "file" }
-          }),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "custom-file-label", attrs: { for: "" } },
-            [_vm._v("Choose file")]
           )
         ])
       ])
