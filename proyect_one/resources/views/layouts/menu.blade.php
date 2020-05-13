@@ -55,6 +55,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <router-link to="/developer" class="nav-link">
+                        <i class="fab fa-codepen"></i>
+                        <p>
+                            Programador
+                            {{-- <i class="right fas fa-angle-left"></i> --}}
+                        </p>
+                    </router-link>
+                </li>
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="fas fa-user"></i>
                         <p>

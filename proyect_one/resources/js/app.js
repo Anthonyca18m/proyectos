@@ -17,11 +17,13 @@ Vue.component(AlertError.name, AlertError)
 
 const Home = Vue.component('home-component', require('./components/ExampleComponent.vue').default);
 const Users = Vue.component('users-component', require('./components/UsersComponent.vue').default);
+const Dev = Vue.component('dev-component', require('./components/Developer.vue').default);
 
 const routes = [
     { path: '/dashboard', name : 'Home', component: Home },
     { path: '/home', name : 'Home', component: Home },
-    { path: '/users', name : 'Users', component: Users }
+    { path: '/users', name : 'Users', component: Users },
+    { path: '/developer', name : 'Users', component: Dev }
     // REDIRECCIONANDO A PAGINAS POR DEFAULT
     // { path : '/registrarse', redirect : '/signup' },
     // { path : '/*', redirect : '/' }
@@ -69,6 +71,12 @@ Vue.filter('mydate', function(date_at){
 })
 //=================== Filters ====================
 
+
+// =================== laravel/passport =================
+Vue.component( 'passport-clients', require('./components/passport/Clients.vue').default)
+Vue.component( 'passport-authorized-clients', require('./components/passport/AuthorizedClients.vue').default)
+Vue.component( 'passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue').default)
+// =================== laravel/passport =================
 
 const app = new Vue({
     el: '#app',
