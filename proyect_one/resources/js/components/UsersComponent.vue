@@ -156,13 +156,28 @@
         },
         methods: {
             loadUsers(){
+                this.$Progress.start()
                 axios.get('api/user')
-                    .then( ({ data }) => ( this.users = data.data ) )
+                    .then( ({ data }) => {
+                        this.users = data.data
+                        this.$Progress.finish()
+                    }, (data) => {
+                        console.log(data)
+                        this.$Progress.fail()
+                    })
             },
             createUser () {
                 // Submit the form via a POST request
+                this.$Progress.start()
+
                 this.form.post('/api/user')
-                    .then(({ data }) => { console.log(data) })
+                    .then(({ data }) => { 
+                        console.log(data) 
+                        this.$Progress.finish()
+                    }, (data) => {
+                        console.log(data)
+                        this.$Progress.fail()
+                    })
             }
         },
         created (){
