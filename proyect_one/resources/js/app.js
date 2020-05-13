@@ -7,6 +7,7 @@ import VueRouter from "vue-router";
 import { Form, HasError, AlertError } from 'vform'
 import moment from "moment"
 import VueProgressBar from 'vue-progressbar'
+import Swal from 'sweetalert2'
 
 window.form = Form
 Vue.use(VueRouter)
@@ -32,6 +33,21 @@ const router = new VueRouter({
     mode: 'history'
 })
 
+window.swal = Swal
+
+const toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
+
+window.toast = toast
 
 moment.locale('es')
 

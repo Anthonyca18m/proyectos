@@ -174,6 +174,11 @@
                     .then(({ data }) => { 
                         console.log(data) 
                         this.$Progress.finish()
+                        $("#adduser_modal").modal('hide')
+                        toast.fire({
+                            icon : 'success',
+                            title: 'Se ha registrado con exitó!.'
+                        })
                     }, (data) => {
                         console.log(data)
                         this.$Progress.fail()
