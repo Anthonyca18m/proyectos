@@ -85,12 +85,12 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">{{ (editMode) ? 'Editar Usuario' : 'Crear Usuario' }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent="createUser">
+                    <form @submit.prevent="(editMode) ? updateUser() : createUser() ">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Nombre</label>
@@ -126,8 +126,10 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" :disabled="form.busy">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary" :disabled="form.busy">
+                                {{ (editMode) ? 'Guardar' : 'Registrar' }}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -140,6 +142,7 @@
     export default {
         data() {
             return {
+                editMode : false,
                 users: [],
                 form: new Form({
                     name: '',
@@ -153,6 +156,7 @@
         },
         methods: {
             newRegister (){
+                this.editMode = false
                 this.form.reset()
                 this.form.clear()
             },
@@ -212,6 +216,7 @@
             },
             editUser (user) {
                 this.newRegister()
+                this.editMode = true
                 this.form.fill(user)
             }
             

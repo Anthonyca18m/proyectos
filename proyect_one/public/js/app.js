@@ -2162,9 +2162,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      editMode: false,
       users: [],
       form: new Form({
         name: '',
@@ -2178,6 +2181,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     newRegister: function newRegister() {
+      this.editMode = false;
       this.form.reset();
       this.form.clear();
     },
@@ -2238,6 +2242,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     editUser: function editUser(user) {
       this.newRegister();
+      this.editMode = true;
       this.form.fill(user);
     }
   },
@@ -63195,7 +63200,15 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h5", { staticClass: "modal-title" }, [
+                  _vm._v(
+                    _vm._s(_vm.editMode ? "Editar Usuario" : "Crear Usuario")
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
+              ]),
               _vm._v(" "),
               _c(
                 "form",
@@ -63203,7 +63216,7 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.createUser($event)
+                      _vm.editMode ? _vm.updateUser() : _vm.createUser()
                     }
                   }
                 },
@@ -63439,7 +63452,7 @@ var render = function() {
                         staticClass: "btn btn-secondary",
                         attrs: { type: "button", "data-dismiss": "modal" }
                       },
-                      [_vm._v("Close")]
+                      [_vm._v("Cancelar")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -63448,7 +63461,13 @@ var render = function() {
                         staticClass: "btn btn-primary",
                         attrs: { type: "submit", disabled: _vm.form.busy }
                       },
-                      [_vm._v("Save changes")]
+                      [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.editMode ? "Guardar" : "Registrar") +
+                            "\n                        "
+                        )
+                      ]
                     )
                   ])
                 ]
@@ -63511,22 +63530,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Modal title")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true
