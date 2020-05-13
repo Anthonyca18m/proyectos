@@ -28,7 +28,7 @@
                                 <h5 class="widget-user-desc text-left">Web Designer</h5>
                             </div>
                             <div class="widget-user-image">
-                                <img class="img-circle" src="" alt="User Avatar">
+                                <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
                             </div>
                             <div class="card-footer">
                                 <div class="row">
@@ -72,28 +72,31 @@
                                 <div class="tab-content">
                                     
                                     <div class="tab-pane active" id="settings">
-                                        <form class="form-horizontal" @submit.prevent="updatedInfo()">
+                                        <form class="form-horizontal" @submit.prevent="updatedInfo()" id="form">
                                             <div class="form-group row">
                                                 <label for="" class="col-sm-2 col-form-label">Nombre</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control"  v-model="form.name"
-                                                    :class="{ 'is-invalid': form.errors.has('name') }">
+                                                    <input type="text" class="form-control"  v-model.trim="form.name"
+                                                    :class="{ 'is-invalid': form.errors.has('name') }"
+                                                    :readonly="!editMode">
                                                     <has-error :form="form" field="name"></has-error>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="" class="col-sm-2 col-form-label">Email</label>
                                                 <div class="col-sm-10">
-                                                    <input type="email" class="form-control" v-model="form.email"
-                                                    :class="{ 'is-invalid': form.errors.has('email') }">
+                                                    <input type="email" class="form-control" v-model.trim="form.email"
+                                                    :class="{ 'is-invalid': form.errors.has('email') }"
+                                                    :readonly="!editMode">
                                                     <has-error :form="form" field="email"></has-error>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputExperience" class="col-sm-2 col-form-label">Biográfia</label>
                                                 <div class="col-sm-10">
-                                                    <textarea class="form-control" placeholder="Experience" v-model="form.bio"
-                                                    :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
+                                                    <textarea class="form-control" placeholder="Experience" v-model.trim="form.bio"
+                                                    :class="{ 'is-invalid': form.errors.has('bio') }"
+                                                    :readonly="!editMode"></textarea>
                                                     <has-error :form="form" field="bio"></has-error>
                                                 </div>
                                             </div>
@@ -102,7 +105,8 @@
                                                 <label for="" class="col-sm-2 col-form-label">Foto</label>
                                                 <div class="input-group col-sm-10">
                                                     <div class="custom-file ">
-                                                        <input type="file" class="custom-file-input" @change="updatePhoto">
+                                                        <input type="file" class="custom-file-input" @change="updatePhoto"
+                                                        :disabled="!editMode">
                                                         <label class="custom-file-label" for="">Choose file</label>
                                                     </div>
                                                 </div>
@@ -110,15 +114,18 @@
                                             <div class="form-group row">
                                                 <label for="" class="col-sm-2 col-form-label">Password ( Dejar vacio si no va a cambiar )</label>
                                                 <div class="col-sm-10">
-                                                    <input type="password" class="form-control" placeholder="password" v-model="form.password"
-                                                    :class="{ 'is-invalid': form.errors.has('password') }">
+                                                    <input type="password" class="form-control" placeholder="password" v-model.trim="form.password"
+                                                    :class="{ 'is-invalid': form.errors.has('password') }"
+                                                    :readonly="!editMode">
                                                     <has-error :form="form" field="password"></has-error>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="offset-sm-2 col-sm-10">
-                                                    <button type="submit" class="btn btn-danger" :disabled="form.busy">Guardar Cambios</button>
+                                                    <button v-if="editMode" type="submit" class="btn btn-danger" :disabled="form.busy">Guardar Cambios</button>
+                                                    <a v-if="!editMode" class="btn btn-primary text-light" @click="editModeF()">Editar</a>
+                                                    <a v-if="editMode" class="btn btn-secondary text-light" @click="cancelEdit()">Cancelar</a>
                                                 </div>
                                             </div>
                                         </form>
@@ -140,6 +147,7 @@
     export default {
         data () {
             return {
+                editMode : false,
                 form : new Form({
                     id : '',
                     name: '',
@@ -152,9 +160,19 @@
             }
         },
         methods: {
+            editModeF () {
+                this.editMode = true
+            },
+            cancelEdit () {
+                this.editMode = false
+                this.form.clear()
+            },
+            getProfilePhoto () {
+                return "img/profile/"+ this.form.photo;
+            },
             loadUser (){
                 this.$Progress.start()
-
+                
                 axios.get('api/profile')
                     .then( ({data}) => {
                         this.$Progress.finish()
@@ -212,6 +230,7 @@
             this.loadUser(),
             Fire.$on('afterUpdated', () => {
                 this.loadUser()
+                this.cancelEdit()
             })
             
         }
