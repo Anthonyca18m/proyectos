@@ -2202,8 +2202,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.$Progress.finish();
 
-        _this2.loadUsers();
-
+        Fire.$emit('afterCreated');
         $("#adduser_modal").modal('hide');
         toast.fire({
           icon: 'success',
@@ -2217,7 +2216,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    var _this3 = this;
+
     this.loadUsers();
+    Fire.$on('afterCreated', function () {
+      _this3.loadUsers();
+    });
   }
 });
 
@@ -78656,6 +78660,7 @@ var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.mixin({
   }
 });
 window.toast = toast;
+window.Fire = new Vue();
 moment__WEBPACK_IMPORTED_MODULE_2___default.a.locale('es');
 Vue.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_3___default.a, {
   color: 'rgb(143, 255, 199)',

@@ -48,6 +48,7 @@ const toast = Swal.mixin({
 })
 
 window.toast = toast
+window.Fire = new Vue()
 
 moment.locale('es')
 

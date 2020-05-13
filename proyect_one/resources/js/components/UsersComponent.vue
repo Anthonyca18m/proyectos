@@ -174,7 +174,7 @@
                     .then(({ data }) => { 
                         console.log(data) 
                         this.$Progress.finish()
-                        this.loadUsers()
+                        Fire.$emit('afterCreated')
                         $("#adduser_modal").modal('hide')
                         toast.fire({
                             icon : 'success',
@@ -188,6 +188,9 @@
         },
         created (){
             this.loadUsers()
+            Fire.$on('afterCreated', () => {
+                this.loadUsers()
+            })
         }
 
     }
