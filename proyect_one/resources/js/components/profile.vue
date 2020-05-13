@@ -72,7 +72,7 @@
                                 <div class="tab-content">
                                     
                                     <div class="tab-pane active" id="settings">
-                                        <form class="form-horizontal">
+                                        <form class="form-horizontal" @submit.prevent="updatedInfo()">
                                             <div class="form-group row">
                                                 <label for="" class="col-sm-2 col-form-label">Nombre</label>
                                                 <div class="col-sm-10">
@@ -167,10 +167,33 @@
                 }
 
                 reader.readAsDataURL(file)
+            },
+            updatedInfo () {
+                // Submit the form via a POST request
+                this.$Progress.start()
+
+                this.form.put('/api/profile')
+                    .then( (data) => { 
+                        
+                        this.$Progress.finish()
+                        Fire.$emit('afterCreated')
+                        
+                        toast.fire({
+                            icon : 'success',
+                            title: 'Su información ha sido actualizada!.'
+                        })
+                    })
+                    .catch( (err) => {
+                        console.log(err)
+                        this.$Progress.fail()
+                    })
             }
         },
         created() {
-            this.loadUser()
+            this.loadUser(),
+            Fire.$on('afterCreated', () => {
+                this.loadUser()
+            })
             
         }
     }
