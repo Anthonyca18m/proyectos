@@ -3322,11 +3322,16 @@ __webpack_require__.r(__webpack_exports__);
     loadUser: function loadUser() {
       var _this = this;
 
+      this.$Progress.start();
       axios.get('api/profile').then(function (_ref) {
         var data = _ref.data;
 
+        _this.$Progress.finish();
+
         _this.form.fill(data);
       })["catch"](function (err) {
+        _this.$Progress.fail();
+
         toast.fire({
           icon: 'error',
           title: 'Oops...',
@@ -3341,11 +3346,15 @@ __webpack_require__.r(__webpack_exports__);
       var file = e.target.files[0];
       var reader = new FileReader();
 
-      reader.onloadend = function (file) {
-        _this2.form.photo = reader.result; // console.log('RESULT', reader.result)
-      };
+      if (file['size'] < 2111775) {
+        reader.onloadend = function (file) {
+          _this2.form.photo = reader.result; // console.log('RESULT', reader.result)
+        };
 
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+      } else {
+        Swal.fire("Oops...!", "El límite por imagen es de 2MB", "warning");
+      }
     },
     updatedInfo: function updatedInfo() {
       var _this3 = this;
@@ -3355,7 +3364,7 @@ __webpack_require__.r(__webpack_exports__);
       this.form.put('/api/profile').then(function (data) {
         _this3.$Progress.finish();
 
-        Fire.$emit('afterCreated');
+        Fire.$emit('afterUpdated');
         toast.fire({
           icon: 'success',
           title: 'Su información ha sido actualizada!.'
@@ -3370,7 +3379,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this4 = this;
 
-    this.loadUser(), Fire.$on('afterCreated', function () {
+    this.loadUser(), Fire.$on('afterUpdated', function () {
       _this4.loadUser();
     });
   }

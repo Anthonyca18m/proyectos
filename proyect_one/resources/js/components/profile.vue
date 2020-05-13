@@ -145,11 +145,15 @@
         },
         methods: {
             loadUser (){
+                this.$Progress.start()
+
                 axios.get('api/profile')
                     .then( ({data}) => {
+                        this.$Progress.finish()
                         this.form.fill(data)
                     })
                     .catch ( (err) => {
+                        this.$Progress.fail()
                         toast.fire({
                             icon: 'error',
                             title: 'Oops...',
@@ -161,12 +165,19 @@
                 // console.log("uploding")
                 let file = e.target.files[0]
                 let reader = new FileReader()
-                reader.onloadend = (file) => {
-                    this.form.photo = reader.result
-                    // console.log('RESULT', reader.result)
+                
+                if (file['size'] < 2111775) {
+                    reader.onloadend = (file) => {
+                        this.form.photo = reader.result
+                        // console.log('RESULT', reader.result)
+                    }
+                    reader.readAsDataURL(file)
+                } else {   
+                    Swal.fire("Oops...!", "El límite por imagen es de 2MB", "warning")
                 }
+                
 
-                reader.readAsDataURL(file)
+                
             },
             updatedInfo () {
                 // Submit the form via a POST request
@@ -176,7 +187,7 @@
                     .then( (data) => { 
                         
                         this.$Progress.finish()
-                        Fire.$emit('afterCreated')
+                        Fire.$emit('afterUpdated')
                         
                         toast.fire({
                             icon : 'success',
@@ -191,7 +202,7 @@
         },
         created() {
             this.loadUser(),
-            Fire.$on('afterCreated', () => {
+            Fire.$on('afterUpdated', () => {
                 this.loadUser()
             })
             
