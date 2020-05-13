@@ -76,19 +76,25 @@
                                             <div class="form-group row">
                                                 <label for="" class="col-sm-2 col-form-label">Nombre</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control"  v-model="form.name">
+                                                    <input type="text" class="form-control"  v-model="form.name"
+                                                    :class="{ 'is-invalid': form.errors.has('name') }">
+                                                    <has-error :form="form" field="name"></has-error>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="" class="col-sm-2 col-form-label">Email</label>
                                                 <div class="col-sm-10">
-                                                    <input type="email" class="form-control" v-model="form.email">
+                                                    <input type="email" class="form-control" v-model="form.email"
+                                                    :class="{ 'is-invalid': form.errors.has('email') }">
+                                                    <has-error :form="form" field="email"></has-error>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputExperience" class="col-sm-2 col-form-label">Biográfia</label>
                                                 <div class="col-sm-10">
-                                                    <textarea class="form-control" placeholder="Experience" v-model="form.bio"></textarea>
+                                                    <textarea class="form-control" placeholder="Experience" v-model="form.bio"
+                                                    :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
+                                                    <has-error :form="form" field="bio"></has-error>
                                                 </div>
                                             </div>
 
@@ -104,13 +110,15 @@
                                             <div class="form-group row">
                                                 <label for="" class="col-sm-2 col-form-label">Password ( Dejar vacio si no va a cambiar )</label>
                                                 <div class="col-sm-10">
-                                                    <input type="password" class="form-control" placeholder="password" v-model="form.password">
+                                                    <input type="password" class="form-control" placeholder="password" v-model="form.password"
+                                                    :class="{ 'is-invalid': form.errors.has('password') }">
+                                                    <has-error :form="form" field="password"></has-error>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="offset-sm-2 col-sm-10">
-                                                    <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+                                                    <button type="submit" class="btn btn-danger" :disabled="form.busy">Guardar Cambios</button>
                                                 </div>
                                             </div>
                                         </form>
