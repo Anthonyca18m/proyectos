@@ -16,16 +16,16 @@
 - php artisan app:name NOMBRE_PROYECTO
 
 ## Comandos más utilizados
-- php artisan make:model NAME_MODEL
-- php artisan make:controller NAME_CONTROLLER
+- php artisan make:model NAME_MODEL (OPTIONAL)-migrate
+- php artisan make:controller NAME_CONTROLLER (OPTIONAL)--api --resource --migrate
 - php artisan make:request NAME_REQUEST
 - php artisan make:migration create_NAMETABLE_table
 - php artisan migrate
-- php artisan migrate --force
+- php artisan migrate (OPTIONAL)--force
 - php artisan migrate:rollback
 - php artisan migrate:reset
 - php artisan migrate:refresh
-- php artisan migrate:refresh --seed
+- php artisan migrate:refresh (OPTIONAL)--seed
 - php artisan key:generate
 
 ## Extras
