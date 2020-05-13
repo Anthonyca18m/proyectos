@@ -5,7 +5,7 @@ window.Vue = require('vue')
 
 import VueRouter from "vue-router";
 import { Form, HasError, AlertError } from 'vform'
-
+import moment from "moment"
 
 window.form = Form
 Vue.use(VueRouter)
@@ -29,11 +29,27 @@ const router = new VueRouter({
     mode: 'history'
 })
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+moment.locale('es')
+
+//=================== Filters ====================
+Vue.filter('capitalize', function(text){
+    return text[0].toUpperCase() + text.slice(1)
+})
+
+Vue.filter('mydate', function(date_at){
+    return moment(date_at).format('MMMM Do YYYY, hh:mm:ss a'); // May 12th 2020, 11:07:41 pm
+})
+//=================== Filters ====================
+
 
 const app = new Vue({
     el: '#app',
     router
 }).$mount('#app')
+
+
+
+
 
 Vue.config.productionTip = false

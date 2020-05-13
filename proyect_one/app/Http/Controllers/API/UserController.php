@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use proyect_one\Http\Controllers\Controller;
 use proyect_one\User;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -33,7 +34,8 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255|min:2',
             'email' => 'required|string|max:50|min:7|unique:users',
-            'password' => 'required|string|max:20|min:8'
+            'password' => 'required|string|max:20|min:8',
+            'type' => 'required|string|min:1'
         ]);
 
         return User::create([
@@ -42,7 +44,9 @@ class UserController extends Controller
             'type' =>  $request['type'],
             'bio' =>  $request['bio'],
             'photo' =>  $request['photo'],
-            'password' =>  Hash::make($request['password'])
+            'password' =>  Hash::make($request['password']),
+            'created_at' => Carbon::now()
+            
         ]);
     }
 

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Carbon\Carbon;
 
 class CreateUsersTable extends Migration
 {
@@ -23,7 +24,9 @@ class CreateUsersTable extends Migration
             $table->mediumText('bio')->nullable();
             $table->string('photo')->nullable()->default('profile.png');
             $table->rememberToken();
-            $table->timestamps();
+            // $table->timestamps();
+            $table->dateTime('created_at')->nullable()->default( Carbon::now() );
+            $table->dateTime('updated_at')->nullable()->default( Carbon::now() );
         });
     }
 

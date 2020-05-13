@@ -57,8 +57,8 @@
                                             <td> {{ item.id }} </td>
                                             <td> {{ item.name }} </td>
                                             <td> {{ item.email }} </td>
-                                            <td> {{ item.type }} </td>
-                                            <td> {{ item.created_at }} </td>
+                                            <td> {{ item.type | capitalize }} </td>
+                                            <td> {{ item.created_at | mydate }} </td>
                                             <td>
                                                 <a href="#" class="mr-2"> <i class="fas fa-edit"></i></a>
                                                 <a href="#"> <i class="fas fa-trash red"></i></a>
@@ -136,7 +136,8 @@
     import {
         Form,
         HasError,
-        AlertError
+        AlertError,
+        AlertSuccess
     } from 'vform'
 
     export default {
