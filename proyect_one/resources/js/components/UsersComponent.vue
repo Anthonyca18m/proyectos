@@ -63,7 +63,7 @@
                                             <td> {{ item.created_at | mydate }} </td>
                                             <td>
                                                 <a href="#" class="mr-2"
-                                                @click="editUser(item)" data-toggle="modal" data-target="#adduser_modal"> <i class="fas fa-edit"></i></a>
+                                                @click="editModal(item)" data-toggle="modal" data-target="#adduser_modal"> <i class="fas fa-edit"></i></a>
                                                 <a href="#" 
                                                 @click="deleteUser(item.id)"> <i class="fas fa-trash red"></i></a>
                                             </td>
@@ -145,6 +145,7 @@
                 editMode : false,
                 users: [],
                 form: new Form({
+                    id : '',
                     name: '',
                     email: '',
                     password: '',
@@ -191,6 +192,26 @@
                         this.$Progress.fail()
                     })
             },
+            updateUser () {
+                // Submit the form via a POST request
+                this.$Progress.start()
+
+                this.form.put('/api/user/' + this.form.id)
+                    .then( (data) => { 
+                        
+                        this.$Progress.finish()
+                        Fire.$emit('afterCreated')
+                        $("#adduser_modal").modal('hide')
+                        toast.fire({
+                            icon : 'success',
+                            title: 'Se ha actualizado con exitó!.'
+                        })
+                    })
+                    .catch( (err) => {
+                        console.log(err)
+                        this.$Progress.fail()
+                    })
+            },
             deleteUser (id) {
                 Swal.fire({
                     title: 'Estas seguro?',
@@ -214,7 +235,7 @@
                     
                 })
             },
-            editUser (user) {
+            editModal (user) {
                 this.newRegister()
                 this.editMode = true
                 this.form.fill(user)

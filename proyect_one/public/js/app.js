@@ -2170,6 +2170,7 @@ __webpack_require__.r(__webpack_exports__);
       editMode: false,
       users: [],
       form: new Form({
+        id: '',
         name: '',
         email: '',
         password: '',
@@ -2220,8 +2221,28 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$Progress.fail();
       });
     },
-    deleteUser: function deleteUser(id) {
+    updateUser: function updateUser() {
       var _this3 = this;
+
+      // Submit the form via a POST request
+      this.$Progress.start();
+      this.form.put('/api/user/' + this.form.id).then(function (data) {
+        _this3.$Progress.finish();
+
+        Fire.$emit('afterCreated');
+        $("#adduser_modal").modal('hide');
+        toast.fire({
+          icon: 'success',
+          title: 'Se ha actualizado con exitó!.'
+        });
+      })["catch"](function (err) {
+        console.log(err);
+
+        _this3.$Progress.fail();
+      });
+    },
+    deleteUser: function deleteUser(id) {
+      var _this4 = this;
 
       Swal.fire({
         title: 'Estas seguro?',
@@ -2232,7 +2253,7 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, Eliminar'
       }).then(function (result) {
-        _this3.form["delete"]('/api/user/' + id).then(function () {
+        _this4.form["delete"]('/api/user/' + id).then(function () {
           result.value ? Swal.fire('Eliminado!', 'Operación exitosa.', 'success') : '';
           Fire.$emit('afterCreated');
         }, function () {
@@ -2240,18 +2261,18 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
-    editUser: function editUser(user) {
+    editModal: function editModal(user) {
       this.newRegister();
       this.editMode = true;
       this.form.fill(user);
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.loadUsers();
     Fire.$on('afterCreated', function () {
-      _this4.loadUsers();
+      _this5.loadUsers();
     });
   }
 });
@@ -63150,7 +63171,7 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  return _vm.editUser(item)
+                                  return _vm.editModal(item)
                                 }
                               }
                             },
