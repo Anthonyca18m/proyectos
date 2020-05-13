@@ -174,6 +174,7 @@
                     .then(({ data }) => { 
                         console.log(data) 
                         this.$Progress.finish()
+                        this.loadUsers()
                         $("#adduser_modal").modal('hide')
                         toast.fire({
                             icon : 'success',

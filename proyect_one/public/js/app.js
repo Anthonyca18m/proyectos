@@ -2202,6 +2202,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.$Progress.finish();
 
+        _this2.loadUsers();
+
         $("#adduser_modal").modal('hide');
         toast.fire({
           icon: 'success',
