@@ -50,7 +50,7 @@ por cada idioma debemos crearle su carpeta en la ruta resources/lang/AQUI_CARPET
 ## Instalación
   Es como cualquier otro proyecto de Laravel. Básicamente aquí es cómo lo usas para ti. (aún no se ha completado)
 
-- Clona el repositorio git clone https://github.com/Hujjat/laravStart.git
+- Clona el repositorio git clone https://github.com/Anthonyca18m/proyectos.git
 - cd to project folder.
 - Run composer install
 - Guarde como .env.example en .env y configure la información de su base de datos
