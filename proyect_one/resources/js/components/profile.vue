@@ -102,9 +102,9 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="" class="col-sm-2 col-form-label">Passport ( Dejar vacio sino cambia )</label>
+                                                <label for="" class="col-sm-2 col-form-label">Password ( Dejar vacio si no va a cambiar )</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control" placeholder="passport">
+                                                    <input type="password" class="form-control" placeholder="password" v-model="form.password">
                                                 </div>
                                             </div>
 
