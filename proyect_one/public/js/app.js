@@ -2158,10 +2158,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      users: [],
       form: new vform__WEBPACK_IMPORTED_MODULE_0__["Form"]({
         name: '',
         email: '',
@@ -2173,13 +2176,24 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    loadUsers: function loadUsers() {
+      var _this = this;
+
+      axios.get('api/user').then(function (_ref) {
+        var data = _ref.data;
+        return _this.users = data.data;
+      });
+    },
     createUser: function createUser() {
       // Submit the form via a POST request
-      this.form.post('/api/user').then(function (_ref) {
-        var data = _ref.data;
+      this.form.post('/api/user').then(function (_ref2) {
+        var data = _ref2.data;
         console.log(data);
       });
     }
+  },
+  created: function created() {
+    this.loadUsers();
   }
 });
 
@@ -39011,7 +39025,43 @@ var render = function() {
   return _c("div", { staticClass: "content-wrapper" }, [
     _vm._m(0),
     _vm._v(" "),
-    _vm._m(1),
+    _c("div", { staticClass: "content" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body table-responsive p-0" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.users, function(item, index) {
+                      return _c("tr", { key: index }, [
+                        _c("td", [_vm._v(" " + _vm._s(item.id) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(item.name) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(item.email) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(item.type) + " ")]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(" " + _vm._s(item.created_at) + " ")]),
+                        _vm._v(" "),
+                        _vm._m(3, true)
+                      ])
+                    }),
+                    0
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -39031,7 +39081,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(2),
+              _vm._m(4),
               _vm._v(" "),
               _c(
                 "form",
@@ -39327,88 +39377,68 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "content" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h3", { staticClass: "card-title" }, [
-                  _vm._v("Tabla usuarios")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-tools" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "input-group input-group-sm",
-                      staticStyle: { width: "150px" }
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-block bg-gradient-success btn-sm text-light",
-                          attrs: {
-                            "data-toggle": "modal",
-                            "data-target": "#adduser_modal"
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                        Agregar "
-                          ),
-                          _c("i", { staticClass: "fas fa-user-plus" })
-                        ]
-                      )
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body table-responsive p-0" }, [
-                _c("table", { staticClass: "table table-hover" }, [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", [_vm._v("ID")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Nombre")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Email")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Tipo")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Acciones")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tbody", [
-                    _c("tr", [
-                      _c("td", [_vm._v("175")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Mike Doe")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("test@gmail.com")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("User")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("a", { staticClass: "mr-2", attrs: { href: "#" } }, [
-                          _c("i", { staticClass: "fas fa-edit" })
-                        ]),
-                        _vm._v(" "),
-                        _c("a", { attrs: { href: "#" } }, [
-                          _c("i", { staticClass: "fas fa-trash red" })
-                        ])
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Tabla usuarios")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-tools" }, [
+        _c(
+          "div",
+          {
+            staticClass: "input-group input-group-sm",
+            staticStyle: { width: "150px" }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "btn btn-block bg-gradient-success btn-sm text-light",
+                attrs: {
+                  "data-toggle": "modal",
+                  "data-target": "#adduser_modal"
+                }
+              },
+              [
+                _vm._v("\n                                        Agregar "),
+                _c("i", { staticClass: "fas fa-user-plus" })
+              ]
+            )
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Nombre")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tipo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Fecha de Registro")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Acciones")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("a", { staticClass: "mr-2", attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fas fa-edit" })
+      ]),
+      _vm._v(" "),
+      _c("a", { attrs: { href: "#" } }, [
+        _c("i", { staticClass: "fas fa-trash red" })
       ])
     ])
   },

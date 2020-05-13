@@ -48,15 +48,17 @@
                                             <th>Nombre</th>
                                             <th>Email</th>
                                             <th>Tipo</th>
+                                            <th>Fecha de Registro</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>175</td>
-                                            <td>Mike Doe</td>
-                                            <td>test@gmail.com</td>
-                                            <td>User</td>
+                                        <tr v-for="(item, index) in users" :key="index">
+                                            <td> {{ item.id }} </td>
+                                            <td> {{ item.name }} </td>
+                                            <td> {{ item.email }} </td>
+                                            <td> {{ item.type }} </td>
+                                            <td> {{ item.created_at }} </td>
                                             <td>
                                                 <a href="#" class="mr-2"> <i class="fas fa-edit"></i></a>
                                                 <a href="#"> <i class="fas fa-trash red"></i></a>
@@ -140,6 +142,7 @@
     export default {
         data() {
             return {
+                users: [],
                 form: new Form({
                     name: '',
                     email: '',
@@ -151,12 +154,19 @@
             }
         },
         methods: {
+            loadUsers(){
+                axios.get('api/user')
+                    .then( ({ data }) => ( this.users = data.data ) )
+            },
             createUser () {
                 // Submit the form via a POST request
                 this.form.post('/api/user')
                     .then(({ data }) => { console.log(data) })
             }
         },
+        created (){
+            this.loadUsers()
+        }
 
     }
 </script>
