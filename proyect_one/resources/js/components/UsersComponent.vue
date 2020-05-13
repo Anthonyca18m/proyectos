@@ -171,8 +171,8 @@
                 this.$Progress.start()
 
                 this.form.post('/api/user')
-                    .then(({ data }) => { 
-                        console.log(data) 
+                    .then( (data) => { 
+                        
                         this.$Progress.finish()
                         Fire.$emit('afterCreated')
                         $("#adduser_modal").modal('hide')
@@ -180,8 +180,9 @@
                             icon : 'success',
                             title: 'Se ha registrado con exitó!.'
                         })
-                    }, (data) => {
-                        console.log(data)
+                    })
+                    .catch( (err) => {
+                        console.log(err)
                         this.$Progress.fail()
                     })
             }

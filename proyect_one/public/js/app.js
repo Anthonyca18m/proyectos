@@ -2196,10 +2196,7 @@ __webpack_require__.r(__webpack_exports__);
 
       // Submit the form via a POST request
       this.$Progress.start();
-      this.form.post('/api/user').then(function (_ref2) {
-        var data = _ref2.data;
-        console.log(data);
-
+      this.form.post('/api/user').then(function (data) {
         _this2.$Progress.finish();
 
         Fire.$emit('afterCreated');
@@ -2208,8 +2205,8 @@ __webpack_require__.r(__webpack_exports__);
           icon: 'success',
           title: 'Se ha registrado con exitó!.'
         });
-      }, function (data) {
-        console.log(data);
+      })["catch"](function (err) {
+        console.log(err);
 
         _this2.$Progress.fail();
       });
