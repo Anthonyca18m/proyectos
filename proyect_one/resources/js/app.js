@@ -4,7 +4,13 @@ require('./bootstrap')
 window.Vue = require('vue')
 
 import VueRouter from "vue-router";
+import { Form, HasError, AlertError } from 'vform'
+
+
+window.form = Form
 Vue.use(VueRouter)
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
 
 const Home = Vue.component('home-component', require('./components/ExampleComponent.vue').default);
 const Users = Vue.component('users-component', require('./components/UsersComponent.vue').default);
