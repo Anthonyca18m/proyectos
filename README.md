@@ -27,7 +27,7 @@
 - php artisan migrate:refresh
 - php artisan migrate:refresh (OPTIONAL)--seed
 - php artisan key:generate
-- php artisan passport:install
+- php artisan passport:install (READ DOCUMENTATION FOR SECURITY OF API)
 
 ## Extras
 
