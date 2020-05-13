@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use proyect_one\Http\Controllers\Controller;
 use proyect_one\User;
 use Carbon\Carbon;
+use Intervention\Image\Image;
 
 class UserController extends Controller
 {
@@ -69,7 +70,11 @@ class UserController extends Controller
 
         $user = auth('api')->user();
 
-        return $request->photo;
+        if ($request->photo) {
+            $name = time(). '.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+
+            \Image::make($request->photo)->save(public_path('img/profile/').$name);
+        }
     }
 
     /**
