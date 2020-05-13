@@ -64,13 +64,13 @@
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <router-link to="/profile" class="nav-link">
                         <i class="fas fa-user"></i>
                         <p>
                             Mis datos
                             {{-- <i class="right fas fa-angle-left"></i> --}}
                         </p>
-                    </a>
+                    </router-link>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}"

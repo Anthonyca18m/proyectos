@@ -17,12 +17,14 @@ Vue.component(AlertError.name, AlertError)
 
 const Home = Vue.component('home-component', require('./components/ExampleComponent.vue').default);
 const Users = Vue.component('users-component', require('./components/UsersComponent.vue').default);
+const profile = Vue.component('profile-component', require('./components/profile.vue').default);
 const Dev = Vue.component('dev-component', require('./components/Developer.vue').default);
 
 const routes = [
     { path: '/dashboard', name : 'Home', component: Home },
     { path: '/home', name : 'Home', component: Home },
     { path: '/users', name : 'Users', component: Users },
+    { path: '/profile', name : 'Profile', component: profile },
     { path: '/developer', name : 'Users', component: Dev }
     // REDIRECCIONANDO A PAGINAS POR DEFAULT
     // { path : '/registrarse', redirect : '/signup' },
