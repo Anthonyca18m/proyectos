@@ -47,5 +47,17 @@ Por defecto estara en modo en => ingles pero lo cambiamos al que nos acomodes
 https://github.com/Laraveles/spanish
 por cada idioma debemos crearle su carpeta en la ruta resources/lang/AQUI_CARPETA_DE_IDIOMA
 
+## Instalación
+  Es como cualquier otro proyecto de Laravel. Básicamente aquí es cómo lo usas para ti. (aún no se ha completado)
+
+- Clona el repositorio git clone https://github.com/Hujjat/laravStart.git
+- cd to project folder.
+- Run composer install
+- Guarde como .env.example en .env y configure la información de su base de datos
+- Ejecute php artisan key: generate para generar la clave de la aplicación
+- Ejecute npm install
+- Ejecute php artisan migrate
+- Hecho !!! Disfruta de personalizar y crear una aplicación increíble
+
 
 >by Anthonyca18m
