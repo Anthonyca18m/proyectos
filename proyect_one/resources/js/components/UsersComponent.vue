@@ -61,7 +61,8 @@
                                             <td> {{ item.created_at | mydate }} </td>
                                             <td>
                                                 <a href="#" class="mr-2"> <i class="fas fa-edit"></i></a>
-                                                <a href="#"> <i class="fas fa-trash red"></i></a>
+                                                <a href="#" 
+                                                @click="deleteUser(item.id)"> <i class="fas fa-trash red"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -133,13 +134,6 @@
 </template>
 
 <script>
-    import {
-        Form,
-        HasError,
-        AlertError,
-        AlertSuccess
-    } from 'vform'
-
     export default {
         data() {
             return {
@@ -185,6 +179,29 @@
                         console.log(err)
                         this.$Progress.fail()
                     })
+            },
+            deleteUser (id) {
+                Swal.fire({
+                    title: 'Estas seguro?',
+                    text: "No podrás revertir esta acción!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, Eliminar'
+                })
+                .then((result) => {
+                    
+                    this.form.delete('/api/user/' + id)
+                    .then( () => {
+                        (result.value) ? Swal.fire( 'Eliminado!', 'Operación exitosa.', 'success') : ''
+                        Fire.$emit('afterCreated')
+                    }, () => {
+                        Swal.fire("Error!", "Intetelo más tarde", "warning")
+                    })
+
+                    
+                })
             }
         },
         created (){

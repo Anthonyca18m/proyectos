@@ -2024,8 +2024,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
-/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2160,12 +2158,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       users: [],
-      form: new vform__WEBPACK_IMPORTED_MODULE_0__["Form"]({
+      form: new Form({
         name: '',
         email: '',
         password: '',
@@ -2210,14 +2208,34 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.$Progress.fail();
       });
+    },
+    deleteUser: function deleteUser(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        title: 'Estas seguro?',
+        text: "No podrás revertir esta acción!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, Eliminar'
+      }).then(function (result) {
+        _this3.form["delete"]('/api/user/' + id).then(function () {
+          result.value ? Swal.fire('Eliminado!', 'Operación exitosa.', 'success') : '';
+          Fire.$emit('afterCreated');
+        }, function () {
+          Swal.fire("Error!", "Intetelo más tarde", "warning");
+        });
+      });
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.loadUsers();
     Fire.$on('afterCreated', function () {
-      _this3.loadUsers();
+      _this4.loadUsers();
     });
   }
 });
@@ -63066,7 +63084,22 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(3, true)
+                        _c("td", [
+                          _vm._m(3, true),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteUser(item.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-trash red" })]
+                          )
+                        ])
                       ])
                     }),
                     0
@@ -63448,14 +63481,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { staticClass: "mr-2", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "fas fa-edit" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "#" } }, [
-        _c("i", { staticClass: "fas fa-trash red" })
-      ])
+    return _c("a", { staticClass: "mr-2", attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fas fa-edit" })
     ])
   },
   function() {
@@ -78617,7 +78644,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 
 
-window.form = vform__WEBPACK_IMPORTED_MODULE_1__["Form"];
+window.Form = vform__WEBPACK_IMPORTED_MODULE_1__["Form"];
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 Vue.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
 Vue.component(vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"]);
@@ -78644,7 +78671,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   // base: process.env.BASE_URL,
   mode: 'history'
 });
-window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a;
+window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a;
 var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.mixin({
   toast: true,
   position: 'top-end',

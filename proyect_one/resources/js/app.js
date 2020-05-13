@@ -9,7 +9,7 @@ import moment from "moment"
 import VueProgressBar from 'vue-progressbar'
 import Swal from 'sweetalert2'
 
-window.form = Form
+window.Form = Form
 Vue.use(VueRouter)
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
@@ -33,7 +33,7 @@ const router = new VueRouter({
     mode: 'history'
 })
 
-window.swal = Swal
+window.Swal = Swal
 
 const toast = Swal.mixin({
     toast: true,
