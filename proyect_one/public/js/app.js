@@ -2159,6 +2159,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2174,6 +2177,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    newRegister: function newRegister() {
+      this.form.reset();
+      this.form.clear();
+    },
     loadUsers: function loadUsers() {
       var _this = this;
 
@@ -2228,6 +2235,10 @@ __webpack_require__.r(__webpack_exports__);
           Swal.fire("Error!", "Intetelo más tarde", "warning");
         });
       });
+    },
+    editUser: function editUser(user) {
+      this.newRegister();
+      this.form.fill(user);
     }
   },
   created: function created() {
@@ -63054,11 +63065,49 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-12" }, [
             _c("div", { staticClass: "card" }, [
-              _vm._m(1),
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Tabla usuarios")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "input-group input-group-sm",
+                      staticStyle: { width: "150px" }
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-block bg-gradient-success btn-sm text-light",
+                          attrs: {
+                            "data-toggle": "modal",
+                            "data-target": "#adduser_modal"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.newRegister()
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                        Agregar "
+                          ),
+                          _c("i", { staticClass: "fas fa-user-plus" })
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body table-responsive p-0" }, [
                 _c("table", { staticClass: "table table-hover" }, [
-                  _vm._m(2),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -63085,7 +63134,23 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", [
-                          _vm._m(3, true),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "mr-2",
+                              attrs: {
+                                href: "#",
+                                "data-toggle": "modal",
+                                "data-target": "#adduser_modal"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.editUser(item)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-edit" })]
+                          ),
                           _vm._v(" "),
                           _c(
                             "a",
@@ -63130,7 +63195,7 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(4),
+              _vm._m(2),
               _vm._v(" "),
               _c(
                 "form",
@@ -63426,41 +63491,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("Tabla usuarios")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-tools" }, [
-        _c(
-          "div",
-          {
-            staticClass: "input-group input-group-sm",
-            staticStyle: { width: "150px" }
-          },
-          [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-block bg-gradient-success btn-sm text-light",
-                attrs: {
-                  "data-toggle": "modal",
-                  "data-target": "#adduser_modal"
-                }
-              },
-              [
-                _vm._v("\n                                        Agregar "),
-                _c("i", { staticClass: "fas fa-user-plus" })
-              ]
-            )
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("ID")]),
@@ -63475,14 +63505,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Acciones")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "mr-2", attrs: { href: "#" } }, [
-      _c("i", { staticClass: "fas fa-edit" })
     ])
   },
   function() {

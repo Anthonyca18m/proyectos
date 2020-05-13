@@ -30,7 +30,9 @@
                                 <div class="card-tools">
                                     <div class="input-group input-group-sm" style="width: 150px;">
                                         <!-- <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar"> -->
-                                        <button class="btn btn-block bg-gradient-success btn-sm text-light" data-toggle="modal" data-target="#adduser_modal">
+                                        <button class="btn btn-block bg-gradient-success btn-sm text-light" 
+                                        data-toggle="modal" data-target="#adduser_modal"
+                                        @click="newRegister()">
                                             Agregar <i class="fas fa-user-plus"></i>
                                         </button>
                                         <!-- <div class="input-group-append">
@@ -60,7 +62,8 @@
                                             <td> {{ item.type | capitalize }} </td>
                                             <td> {{ item.created_at | mydate }} </td>
                                             <td>
-                                                <a href="#" class="mr-2"> <i class="fas fa-edit"></i></a>
+                                                <a href="#" class="mr-2"
+                                                @click="editUser(item)" data-toggle="modal" data-target="#adduser_modal"> <i class="fas fa-edit"></i></a>
                                                 <a href="#" 
                                                 @click="deleteUser(item.id)"> <i class="fas fa-trash red"></i></a>
                                             </td>
@@ -149,7 +152,11 @@
             }
         },
         methods: {
-            loadUsers(){
+            newRegister (){
+                this.form.reset()
+                this.form.clear()
+            },
+            loadUsers (){
                 this.$Progress.start()
                 axios.get('api/user')
                     .then( ({ data }) => {
@@ -202,7 +209,12 @@
 
                     
                 })
+            },
+            editUser (user) {
+                this.newRegister()
+                this.form.fill(user)
             }
+            
         },
         created (){
             this.loadUsers()
