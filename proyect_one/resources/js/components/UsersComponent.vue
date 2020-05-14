@@ -216,23 +216,23 @@
                 Swal.fire({
                     title: 'Estas seguro?',
                     text: "No podrás revertir esta acción!",
-                    icon: 'warning',
+                    icon: 'question',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si, Eliminar'
                 })
                 .then((result) => {
-                    
-                    this.form.delete('/api/user/' + id)
-                    .then( () => {
-                        (result.value) ? Swal.fire( 'Eliminado!', 'Operación exitosa.', 'success') : ''
-                        Fire.$emit('afterCreated')
-                    }, () => {
-                        Swal.fire("Error!", "Intetelo más tarde", "warning")
-                    })
 
-                    
+                    if (result.value) {
+                        this.form.delete('/api/user/' + id)
+                            .then( () => {
+                                Swal.fire( 'Eliminado!', 'Operación exitosa.', 'success')
+                                Fire.$emit('afterCreated')
+                            }, () => {
+                                Swal.fire("Error!", "Intetelo más tarde", "warning")
+                            })
+                    }                    
                 })
             },
             editModal (user) {

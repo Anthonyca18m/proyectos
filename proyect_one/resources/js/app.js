@@ -22,10 +22,10 @@ const Dev = Vue.component('dev-component', require('./components/Developer.vue')
 
 const routes = [
     { path: '/dashboard', name : 'Home', component: Home },
-    { path: '/home', name : 'Home', component: Home },
+    { path: '/home', name : 'Start', component: Home },
     { path: '/users', name : 'Users', component: Users },
     { path: '/profile', name : 'Profile', component: profile },
-    { path: '/developer', name : 'Users', component: Dev }
+    { path: '/developer', name : 'Devps', component: Dev }
     // REDIRECCIONANDO A PAGINAS POR DEFAULT
     // { path : '/registrarse', redirect : '/signup' },
     // { path : '/*', redirect : '/' }

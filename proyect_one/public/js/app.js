@@ -2298,18 +2298,20 @@ __webpack_require__.r(__webpack_exports__);
       Swal.fire({
         title: 'Estas seguro?',
         text: "No podrás revertir esta acción!",
-        icon: 'warning',
+        icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, Eliminar'
       }).then(function (result) {
-        _this4.form["delete"]('/api/user/' + id).then(function () {
-          result.value ? Swal.fire('Eliminado!', 'Operación exitosa.', 'success') : '';
-          Fire.$emit('afterCreated');
-        }, function () {
-          Swal.fire("Error!", "Intetelo más tarde", "warning");
-        });
+        if (result.value) {
+          _this4.form["delete"]('/api/user/' + id).then(function () {
+            Swal.fire('Eliminado!', 'Operación exitosa.', 'success');
+            Fire.$emit('afterCreated');
+          }, function () {
+            Swal.fire("Error!", "Intetelo más tarde", "warning");
+          });
+        }
       });
     },
     editModal: function editModal(user) {
@@ -82403,7 +82405,7 @@ var routes = [{
   component: Home
 }, {
   path: '/home',
-  name: 'Home',
+  name: 'Start',
   component: Home
 }, {
   path: '/users',
@@ -82415,7 +82417,7 @@ var routes = [{
   component: profile
 }, {
   path: '/developer',
-  name: 'Users',
+  name: 'Devps',
   component: Dev
 } // REDIRECCIONANDO A PAGINAS POR DEFAULT
 // { path : '/registrarse', redirect : '/signup' },
