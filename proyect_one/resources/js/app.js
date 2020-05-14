@@ -23,6 +23,7 @@ const Home = Vue.component('home-component', require('./components/ExampleCompon
 const Users = Vue.component('users-component', require('./components/UsersComponent.vue').default);
 const profile = Vue.component('profile-component', require('./components/profile.vue').default);
 const Dev = Vue.component('dev-component', require('./components/Developer.vue').default);
+const notfound = Vue.component('not-found', require('./components/NotFound.vue').default);
 
 const routes = [
     { path: '/dashboard', name : 'Home', component: Home },

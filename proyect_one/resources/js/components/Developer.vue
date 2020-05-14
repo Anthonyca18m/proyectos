@@ -34,15 +34,7 @@
             </div>
         </div>      
     </div>
-    <div class="content-wrapper" v-else>
-        <div class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <h1>No tienes acceso.</h1>
-                </div>
-            </div>
-        </div>
-    </div>
+    <not-found v-else />
   </div>
   
 
