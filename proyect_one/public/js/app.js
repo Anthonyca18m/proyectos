@@ -83174,10 +83174,12 @@ var routes = [{
   path: '/developer',
   name: 'Devps',
   component: Dev
-} // REDIRECCIONANDO A PAGINAS POR DEFAULT
+}, // REDIRECCIONANDO A PAGINAS POR DEFAULT
 // { path : '/registrarse', redirect : '/signup' },
-// { path : '/*', redirect : '/' }
-];
+{
+  path: '*',
+  redirect: '/home'
+}];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: routes,
   // base: process.env.BASE_URL,

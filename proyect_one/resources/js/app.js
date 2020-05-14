@@ -32,10 +32,10 @@ const routes = [
     { path: '/home', name : 'Start', component: Home },
     { path: '/users', name : 'Users', component: Users },
     { path: '/profile', name : 'Profile', component: profile },
-    { path: '/developer', name : 'Devps', component: Dev }
+    { path: '/developer', name : 'Devps', component: Dev },
     // REDIRECCIONANDO A PAGINAS POR DEFAULT
     // { path : '/registrarse', redirect : '/signup' },
-    // { path : '/*', redirect : '/' }
+    { path : '*', redirect : '/home' }
 ]
 
 const router = new VueRouter({
