@@ -1,4 +1,22 @@
 ##### PROYECTOS PERSONALES Anthonyca18m
+## Funcionalidades del sistema
+    Cómo usar Vue Router con Laravel
+    Cómo instalar AdminLTE
+    Cómo instalar e usar Awesome 5 en Laravel
+    Cómo integrar mailchimp con laravel
+    Como usar Laravel Socialite
+    Cómo iniciar sesión usando las redes sociales
+    Cómo usar API en Laravel
+    Api Auth con pasaporte Laravel
+    JWT con passport Laravel y solicitud de JavaScript
+    Vue Eventos personalizados
+    Vue form con Laravel
+    Base de datos relacional con Laravel
+    Axios y Ajax Request
+    ACL (Access limit controller) en Laravel
+    Online Users list
+    Y mucho más...
+
 
 ## Crear el proyecto:
 - composer create--project  --prefer-dist laravel/laravel NOMBRE_PROYECTO  -> con laravel 6
