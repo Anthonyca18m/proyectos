@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use proyect_one\Http\Controllers\Controller;
 use proyect_one\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Access\Gate;
 use Intervention\Image\Image;
 
 class UserController extends Controller
@@ -28,7 +29,10 @@ class UserController extends Controller
     public function index()
     {
         //
-        return User::latest()->paginate(10);
+        if (\Gate::allows('isAdmin') | \Gate::allows('isAutor')) {
+            return User::latest()->paginate(10);
+        }
+        
     }
 
     /**
