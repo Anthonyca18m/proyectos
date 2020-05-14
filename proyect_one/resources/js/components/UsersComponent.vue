@@ -55,7 +55,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item, index) in users" :key="index">
+                                        <tr v-for="(item, index) in users.data" :key="index">
                                             <td> {{ item.id }} </td>
                                             <td> {{ item.name }} </td>
                                             <td> {{ item.email }} </td>
@@ -72,6 +72,13 @@
                                 </table>
                             </div>
                             <!-- /.card-body -->
+                            <div class="card-footer">
+                                <!-- <div class="overflow-auto"> -->
+                                    <pagination :data="users" @pagination-change-page="getResults"
+                                    align="center"></pagination>
+                                <!-- </div> -->
+                                
+                            </div>
                         </div>
                         <!-- /.card -->
                     </div>
@@ -143,7 +150,7 @@
         data() {
             return {
                 editMode : false,
-                users: [],
+                users: {},
                 form: new Form({
                     id : '',
                     name: '',
@@ -156,6 +163,13 @@
             }
         },
         methods: {
+            // Our method to GET results from a Laravel endpoint
+            getResults(page = 1) {
+                axios.get('api/user?page=' + page)
+                    .then(response => {
+                        this.users = response.data
+                    })
+            },
             newRegister (){
                 this.editMode = false
                 this.form.reset()
@@ -165,7 +179,7 @@
                 this.$Progress.start()
                 axios.get('api/user')
                     .then( ({ data }) => {
-                        this.users = data.data
+                        this.users = data
                         this.$Progress.finish()
                     }, (data) => {
                         console.log(data)
@@ -244,6 +258,7 @@
         },
         created (){
             this.loadUsers()
+            this.getResults()
             Fire.$on('afterCreated', () => {
                 this.loadUsers()
             })

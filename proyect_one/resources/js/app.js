@@ -25,6 +25,8 @@ const profile = Vue.component('profile-component', require('./components/profile
 const Dev = Vue.component('dev-component', require('./components/Developer.vue').default);
 const notfound = Vue.component('not-found', require('./components/NotFound.vue').default);
 
+Vue.component('pagination', require('laravel-vue-pagination'))
+
 const routes = [
     { path: '/dashboard', name : 'Home', component: Home },
     { path: '/home', name : 'Start', component: Home },
