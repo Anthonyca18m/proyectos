@@ -70,6 +70,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {{-- <script src="plugins/jquery/jquery.min.js"></script> --}}
     <!-- Bootstrap 4 -->
     {{-- <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+
+    @auth
+    <script>
+        window.user = @json(auth()->user());  
+    </script>
+    @endauth
     <!-- AdminLTE App -->
     <script src="/js/app.js"></script>
 </body>
