@@ -1,4 +1,7 @@
 ##### PROYECTOS PERSONALES Anthonyca18m
+ Este es un proyecto para reutilizar código en diversos proyectos, espero les sirve.
+
+
 ## Funcionalidades del sistema
     Cómo usar Vue Router con Laravel
     Cómo instalar AdminLTE
