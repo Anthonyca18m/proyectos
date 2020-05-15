@@ -70,7 +70,8 @@ class UserController extends Controller
         return auth('api')->user();
     }
 
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request)
+    {
 
         $user = auth('api')->user();
 
@@ -103,6 +104,21 @@ class UserController extends Controller
         $user->update($request->all());
 
         return ['message' => 'Success'];
+    }
+
+    public function search()
+    {
+
+        
+        if ($search = \Request::get('q')) {
+            $users = User::where(function ($query) use ($search){
+                $query->where('name', 'LIKE', "%$search%")
+                    ->orWhere('email', 'LIKE', "%$search%")
+                    ->orWhere('type', 'LIKE', "%$search%");
+            })->paginate(10);
+        }
+
+        return $users;
     }
 
     /**

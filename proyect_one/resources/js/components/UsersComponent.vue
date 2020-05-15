@@ -24,20 +24,44 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Tabla usuarios</h3>
 
-                                <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <!-- <input type="text" name="table_search" class="form-control float-right" placeholder="Buscar"> -->
-                                        <button class="btn btn-block bg-gradient-success btn-sm text-light" 
-                                        data-toggle="modal" data-target="#adduser_modal"
-                                        @click="newRegister()">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h3 class="card-title mr-2">Tabla usuarios</h3>
+                                        <div class="btn-group btn-group-sm">
+                                            <button type="button" class="btn btn-danger" title="EXPORTAR PDF">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-success" title="EXPORTAR EXCEL">
+                                                <i class="fas fa-file-excel"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-warning" title="EXPORTAL CSV">
+                                                <i class="fas fa-file-csv"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-copy" title="COPIAR">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-secondary" title="IMPRIMIR">
+                                                <i class="fas fa-print"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 text-right">Buscar: </label>
+                                            <div class="col-sm-8">
+                                                <input type="search"
+                                                v-model.trim="search"
+                                                @keypress.enter="searchit()"
+                                                class="form-control form-control-sm" placeholder="Buscar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 text-right">                           
+                                        <button class="btn ml-2 bg-gradient-success btn-sm text-light" data-toggle="modal" data-target="#adduser_modal" @click="newRegister()">
                                             Agregar <i class="fas fa-user-plus"></i>
-                                        </button>
-                                        <!-- <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                                        </div> -->
+                                        </button>                        
                                     </div>
                                 </div>
                             </div>
@@ -62,10 +86,8 @@
                                             <td> {{ item.type | capitalize }} </td>
                                             <td> {{ item.created_at | mydate }} </td>
                                             <td>
-                                                <a href="#" class="mr-2"
-                                                @click="editModal(item)" data-toggle="modal" data-target="#adduser_modal"> <i class="fas fa-edit"></i></a>
-                                                <a href="#" 
-                                                @click="deleteUser(item.id)"> <i class="fas fa-trash red"></i></a>
+                                                <a href="#" class="mr-2" @click="editModal(item)" data-toggle="modal" data-target="#adduser_modal"> <i class="fas fa-edit"></i></a>
+                                                <a href="#" @click="deleteUser(item.id)"> <i class="fas fa-trash red"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -74,10 +96,9 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <!-- <div class="overflow-auto"> -->
-                                    <pagination :data="users" @pagination-change-page="getResults"
-                                    align="center"></pagination>
+                                <pagination :data="users" @pagination-change-page="getResults" align="center"></pagination>
                                 <!-- </div> -->
-                                
+
                             </div>
                         </div>
                         <!-- /.card -->
@@ -149,10 +170,11 @@
     export default {
         data() {
             return {
-                editMode : false,
+                search : '',
+                editMode: false,
                 users: {},
                 form: new Form({
-                    id : '',
+                    id: '',
                     name: '',
                     email: '',
                     password: '',
@@ -170,15 +192,17 @@
                         this.users = response.data
                     })
             },
-            newRegister (){
+            newRegister() {
                 this.editMode = false
                 this.form.reset()
                 this.form.clear()
             },
-            loadUsers (){
+            loadUsers() {
                 this.$Progress.start()
                 axios.get('api/user')
-                    .then( ({ data }) => {
+                    .then(({
+                        data
+                    }) => {
                         this.users = data
                         this.$Progress.finish()
                     }, (data) => {
@@ -186,77 +210,94 @@
                         this.$Progress.fail()
                     })
             },
-            createUser () {
+            createUser() {
                 // Submit the form via a POST request
                 this.$Progress.start()
 
                 this.form.post('/api/user')
-                    .then( (data) => { 
-                        
+                    .then((data) => {
+
                         this.$Progress.finish()
                         Fire.$emit('afterCreated')
                         $("#adduser_modal").modal('hide')
                         toast.fire({
-                            icon : 'success',
+                            icon: 'success',
                             title: 'Se ha registrado con exitó!.'
                         })
                     })
-                    .catch( (err) => {
+                    .catch((err) => {
                         console.log(err)
                         this.$Progress.fail()
                     })
             },
-            updateUser () {
+            updateUser() {
                 // Submit the form via a POST request
                 this.$Progress.start()
 
                 this.form.put('/api/user/' + this.form.id)
-                    .then( (data) => { 
-                        
+                    .then((data) => {
+
                         this.$Progress.finish()
                         Fire.$emit('afterCreated')
                         $("#adduser_modal").modal('hide')
                         toast.fire({
-                            icon : 'success',
+                            icon: 'success',
                             title: 'Se ha actualizado con exitó!.'
                         })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        this.$Progress.fail()
+                    })
+            },
+            deleteUser(id) {
+                Swal.fire({
+                        title: 'Estas seguro?',
+                        text: "No podrás revertir esta acción!",
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, Eliminar'
+                    })
+                    .then((result) => {
+
+                        if (result.value) {
+                            this.form.delete('/api/user/' + id)
+                                .then(() => {
+                                    Swal.fire('Eliminado!', 'Operación exitosa.', 'success')
+                                    Fire.$emit('afterCreated')
+                                }, () => {
+                                    Swal.fire("Error!", "Intetelo más tarde", "warning")
+                                })
+                        }
+                    })
+            },
+            editModal(user) {
+                this.newRegister()
+                this.editMode = true
+                this.form.fill(user)
+            },
+            searchit(){
+                let query = this.search
+                if (query) {
+                    this.$Progress.start()
+                    axios.get('api/findUser?q=' + query)
+                    .then( ({data}) => {
+                        this.$Progress.finish()
+                        this.users = data
                     })
                     .catch( (err) => {
                         console.log(err)
                         this.$Progress.fail()
                     })
-            },
-            deleteUser (id) {
-                Swal.fire({
-                    title: 'Estas seguro?',
-                    text: "No podrás revertir esta acción!",
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, Eliminar'
-                })
-                .then((result) => {
-
-                    if (result.value) {
-                        this.form.delete('/api/user/' + id)
-                            .then( () => {
-                                Swal.fire( 'Eliminado!', 'Operación exitosa.', 'success')
-                                Fire.$emit('afterCreated')
-                            }, () => {
-                                Swal.fire("Error!", "Intetelo más tarde", "warning")
-                            })
-                    }                    
-                })
-            },
-            editModal (user) {
-                this.newRegister()
-                this.editMode = true
-                this.form.fill(user)
+                }else {
+                    this.loadUsers()
+                }
+                                
             }
-            
         },
-        created (){
+        created() {
             this.loadUsers()
             this.getResults()
             Fire.$on('afterCreated', () => {
@@ -268,5 +309,8 @@
 </script>
 
 <style>
-
+.btn-copy{
+    background: #4e4e4e;
+    color: #ffffff;
+}
 </style>

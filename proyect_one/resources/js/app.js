@@ -89,11 +89,11 @@ Vue.component( 'passport-personal-access-tokens', require('./components/passport
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
 }).$mount('#app')
 
 
 
 
 
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
