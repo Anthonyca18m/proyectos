@@ -30,19 +30,19 @@
                                     <div class="col-sm-3">
                                         <h3 class="card-title mr-2">Tabla usuarios</h3>
                                         <div class="btn-group btn-group-sm">
-                                            <button type="button" class="btn btn-danger" title="EXPORTAR PDF">
+                                            <button class="btn btn-danger" title="EXPORTAR PDF">
                                                 <i class="fas fa-file-pdf"></i>
                                             </button>
-                                            <button type="button" class="btn btn-success" title="EXPORTAR EXCEL">
+                                            <button class="btn btn-success" title="EXPORTAR EXCEL">
                                                 <i class="fas fa-file-excel"></i>
                                             </button>
-                                            <button type="button" class="btn btn-warning" title="EXPORTAL CSV">
+                                            <button class="btn btn-warning" title="EXPORTAL CSV">
                                                 <i class="fas fa-file-csv"></i>
                                             </button>
-                                            <button type="button" class="btn btn-default btn-copy" title="COPIAR">
+                                            <button class="btn btn-default btn-copy" title="COPIAR">
                                                 <i class="fas fa-copy"></i>
                                             </button>
-                                            <button type="button" class="btn btn-secondary" title="IMPRIMIR">
+                                            <button class="btn btn-secondary" title="IMPRIMIR">
                                                 <i class="fas fa-print"></i>
                                             </button>
                                         </div>
@@ -80,7 +80,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(item, index) in users.data" :key="index">
-                                            <td> {{ item.id }} </td>
+                                            <td> {{ index }} </td>
                                             <td> {{ item.name }} </td>
                                             <td> {{ item.email }} </td>
                                             <td> {{ item.type | capitalize }} </td>
@@ -96,7 +96,7 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <!-- <div class="overflow-auto"> -->
-                                <pagination :data="users" @pagination-change-page="getResults" align="center"></pagination>
+                                <pagination :data="users" @pagination-change-page="getResults" align="center" limit="-1" show-disabled="true"></pagination>
                                 <!-- </div> -->
 
                             </div>

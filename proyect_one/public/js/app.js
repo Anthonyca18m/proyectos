@@ -65921,7 +65921,7 @@ var render = function() {
                     "tbody",
                     _vm._l(_vm.users.data, function(item, index) {
                       return _c("tr", { key: index }, [
-                        _c("td", [_vm._v(" " + _vm._s(item.id) + " ")]),
+                        _c("td", [_vm._v(" " + _vm._s(index) + " ")]),
                         _vm._v(" "),
                         _c("td", [_vm._v(" " + _vm._s(item.name) + " ")]),
                         _vm._v(" "),
@@ -65985,7 +65985,12 @@ var render = function() {
                 { staticClass: "card-footer" },
                 [
                   _c("pagination", {
-                    attrs: { data: _vm.users, align: "center" },
+                    attrs: {
+                      data: _vm.users,
+                      align: "center",
+                      limit: "-1",
+                      "show-disabled": "true"
+                    },
                     on: { "pagination-change-page": _vm.getResults }
                   })
                 ],
@@ -66331,10 +66336,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "btn-group btn-group-sm" }, [
         _c(
           "button",
-          {
-            staticClass: "btn btn-danger",
-            attrs: { type: "button", title: "EXPORTAR PDF" }
-          },
+          { staticClass: "btn btn-danger", attrs: { title: "EXPORTAR PDF" } },
           [_c("i", { staticClass: "fas fa-file-pdf" })]
         ),
         _vm._v(" "),
@@ -66342,17 +66344,14 @@ var staticRenderFns = [
           "button",
           {
             staticClass: "btn btn-success",
-            attrs: { type: "button", title: "EXPORTAR EXCEL" }
+            attrs: { title: "EXPORTAR EXCEL" }
           },
           [_c("i", { staticClass: "fas fa-file-excel" })]
         ),
         _vm._v(" "),
         _c(
           "button",
-          {
-            staticClass: "btn btn-warning",
-            attrs: { type: "button", title: "EXPORTAL CSV" }
-          },
+          { staticClass: "btn btn-warning", attrs: { title: "EXPORTAL CSV" } },
           [_c("i", { staticClass: "fas fa-file-csv" })]
         ),
         _vm._v(" "),
@@ -66360,17 +66359,14 @@ var staticRenderFns = [
           "button",
           {
             staticClass: "btn btn-default btn-copy",
-            attrs: { type: "button", title: "COPIAR" }
+            attrs: { title: "COPIAR" }
           },
           [_c("i", { staticClass: "fas fa-copy" })]
         ),
         _vm._v(" "),
         _c(
           "button",
-          {
-            staticClass: "btn btn-secondary",
-            attrs: { type: "button", title: "IMPRIMIR" }
-          },
+          { staticClass: "btn btn-secondary", attrs: { title: "IMPRIMIR" } },
           [_c("i", { staticClass: "fas fa-print" })]
         )
       ])

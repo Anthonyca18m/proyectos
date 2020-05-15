@@ -89,7 +89,7 @@ Vue.component( 'passport-personal-access-tokens', require('./components/passport
 
 const app = new Vue({
     el: '#app',
-    router,
+    router
 }).$mount('#app')
 
 
