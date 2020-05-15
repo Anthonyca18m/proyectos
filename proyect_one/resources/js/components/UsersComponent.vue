@@ -96,7 +96,7 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <!-- <div class="overflow-auto"> -->
-                                <pagination :data="users" @pagination-change-page="getResults" align="center" limit="-1" show-disabled="true"></pagination>
+                                <pagination :data="users" @pagination-change-page="getResults" align="center"></pagination>
                                 <!-- </div> -->
 
                             </div>
