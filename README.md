@@ -1,4 +1,7 @@
 ##### PROYECTOS PERSONALES Anthonyca18m
+ Este es un proyecto para reutilizar código en diversos proyectos, espero les sirve.
+
+
 ## Funcionalidades del sistema
     Cómo usar Vue Router con Laravel
     Cómo instalar AdminLTE
@@ -78,6 +81,11 @@ por cada idioma debemos crearle su carpeta en la ruta resources/lang/AQUI_CARPET
 - Ejecute php artisan migrate
 - Hecho !!! Disfruta de personalizar y crear una aplicación increíble
 
+**Nota:** para probar en producción ejecute "npm run production" y cambie valores en el .env a 
+APP_ENV=production
+APP_DEBUG=false
+
+Luck!
 
 >by Anthonyca18m
 
