@@ -39,37 +39,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </head>
 
 <body class="hold-transition sidebar-mini">
+
+    
     <div class="wrapper" id="app">
 
-        <!-- Navbar -->
-        @include('layouts.nav')
-        <!-- /.navbar -->
+        <v-app>
+            <!-- Navbar -->
+            @include('layouts.nav')
+            <!-- /.navbar -->
 
-        <!-- Main Sidebar Container -->
-        @include('layouts.menu')
+            <!-- Main Sidebar Container -->
+            @include('layouts.menu')
 
-        <!-- Content Wrapper. Contains page content -->
-            <!-- Main content -->
-            <router-view></router-view>
-            <vue-progress-bar></vue-progress-bar>
-            <!-- /.content -->
-        <!-- /.content-wrapper -->
+            <!-- Content Wrapper. Contains page content -->
+                <!-- Main content -->
+                <router-view></router-view>
+                <vue-progress-bar></vue-progress-bar>
+                <!-- /.content -->
+            <!-- /.content-wrapper -->
 
-        <!-- Control Sidebar -->
-        @include('layouts.control-right')
-        <!-- /.control-sidebar -->
+            <!-- Control Sidebar -->
+            @include('layouts.control-right')
+            <!-- /.control-sidebar -->
 
-        <!-- Main Footer -->
-        @include('layouts.footer')
+            <!-- Main Footer -->
+            @include('layouts.footer')
+        </v-app>
     </div>
-    <!-- ./wrapper -->
-
-    <!-- REQUIRED SCRIPTS -->
-
-    <!-- jQuery -->
-    {{-- <script src="plugins/jquery/jquery.min.js"></script> --}}
-    <!-- Bootstrap 4 -->
-    {{-- <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
 
     @auth
     <script>
