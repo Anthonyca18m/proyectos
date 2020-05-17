@@ -22,54 +22,85 @@
         <div class="content">
             <div class="container-fluid">
 
-                
-                    <div class="text-center mb-4">
-                        <v-btn color="primary" @click="alert = !alert">
-                            Toggle
-                        </v-btn>
-                    </div>
-                    <v-alert :value="alert" color="pink" dark border="top" icon="mdi-home" transition="scale-transition">
-                        Phasellus tempus. Fusce ac felis sit amet ligula pharetra condimentum. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Pellentesque posuere. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo.
-
-                        Phasellus nec sem in justo pellentesque facilisis. Phasellus magna. Cras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo. In hac habitasse platea dictumst. Praesent turpis.
-                    </v-alert>
-            
-
-
                 <div class="row card p-5">
                     <div class="col-sm-12 card-body table-responsive p-0">
-                        <table id="example" class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <!-- <tbody>
-                                <tr v-for="(item, index) in users.data" :key="index">
-                                    <td>Tiger Nixon {{ index }} </td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                            </tbody> -->
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </tfoot>
-                        </table>
+                        <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
+                            <template v-slot:top>
+                                <v-toolbar flat color="white">
+                                    <v-toolbar-title>My CRUD</v-toolbar-title>
+                                    
+                                    <v-divider class="mx-4" inset vertical></v-divider>
+                                    <v-btn-toggle
+                                        v-model="toggle_exclusive"
+                                        >
+                                        <v-btn>
+                                            <v-icon>mdi-format-align-left</v-icon>
+                                        </v-btn>
+                                        <v-btn>
+                                            <v-icon>mdi-format-align-center</v-icon>
+                                        </v-btn>
+                                        <v-btn>
+                                            <v-icon>mdi-format-align-right</v-icon>
+                                        </v-btn>
+                                        <v-btn>
+                                            <v-icon>mdi-format-align-justify</v-icon>
+                                        </v-btn>
+                                    </v-btn-toggle>
+                                    
+                                    <v-spacer></v-spacer>
+                                    
+                                    <v-dialog v-model="dialog" max-width="500px">
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
+                                        </template>
+                                        <v-card>
+                                            <v-card-title>
+                                                <span class="headline">{{ formTitle }}</span>
+                                            </v-card-title>
+
+                                            <v-card-text>
+                                                <v-container>
+                                                    <v-row>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
+                                                        </v-col>
+                                                        <v-col cols="12" sm="6" md="4">
+                                                            <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
+                                                        </v-col>
+                                                    </v-row>
+                                                </v-container>
+                                            </v-card-text>
+
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+                                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </v-dialog>
+                                </v-toolbar>
+                            </template>
+                            <template v-slot:item.actions="{ item }">
+                                <v-icon small class="mr-2" @click="editItem(item)">
+                                    mdi-pencil
+                                </v-icon>
+                                <v-icon small @click="deleteItem(item)">
+                                    mdi-delete
+                                </v-icon>
+                            </template>
+                            <template v-slot:no-data>
+                                <v-btn color="primary" @click="initialize">Reset</v-btn>
+                            </template>
+                        </v-data-table>
                     </div>
 
                 </div>
@@ -78,31 +109,90 @@
     </div>
 </template>
 
+
 <script>
     export default {
-        data() {
-            return {
-                users: {},
-                alert : true
-            }
+        data: () => ({
+            dialog: false,
+            headers: [
+                { text: 'ID', align: 'start', value: 'id'},
+                { text: 'name', value: 'name' },
+                { text: 'email', value: 'email' },
+                { text: 'type', value: 'type' },
+                { text: 'created_at', value: 'created_at' },
+                { text: 'Actions', value: 'actions' },
+            ],
+            desserts: [],
+            editedIndex: -1,
+            editedItem: {
+                name: '',
+                calories: 0,
+                fat: 0,
+                carbs: 0,
+                protein: 0,
+            },
+            defaultItem: {
+                name: '',
+                calories: 0,
+                fat: 0,
+                carbs: 0,
+                protein: 0,
+            },
+        }),
+
+        computed: {
+            formTitle() {
+                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+            },
         },
-        methods: {
-            table() {
-                // axios.get('api/user')
-                //     .then(({ data }) => {
-                //         this.users = data
-                //     }, (data) => {
-                //         console.log(data)
-                //     })
-                $(document).ready(function() {
-                    $('#example').DataTable({
-                        'ajax': 'api/user'
-                    })
-                })
-            }
+
+        watch: {
+            dialog(val) {
+                val || this.close()
+            },
         },
+
         created() {
-            this.table()
+            this.initialize()
+        },
+
+        methods: {
+            initialize() {
+                axios.get('api/user')
+                    .then(({ data }) => {
+                        this.desserts = data.data
+                    }, (data) => {
+                        console.log(data) 
+                    })
+            },
+
+            editItem(item) {
+                this.editedIndex = this.desserts.indexOf(item)
+                this.editedItem = Object.assign({}, item)
+                this.dialog = true
+            },
+
+            deleteItem(item) {
+                const index = this.desserts.indexOf(item)
+                confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+            },
+
+            close() {
+                this.dialog = false
+                this.$nextTick(() => {
+                    this.editedItem = Object.assign({}, this.defaultItem)
+                    this.editedIndex = -1
+                })
+            },
+
+            save() {
+                if (this.editedIndex > -1) {
+                    Object.assign(this.desserts[this.editedIndex], this.editedItem)
+                } else {
+                    this.desserts.push(this.editedItem)
+                }
+                this.close()
+            },
         },
     }
 </script>

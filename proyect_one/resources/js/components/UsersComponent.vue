@@ -206,7 +206,7 @@
                         this.users = data
                         this.$Progress.finish()
                     }, (data) => {
-                        console.log(data)
+                        console.log(data) 
                         this.$Progress.fail()
                     })
             },
