@@ -1,5 +1,6 @@
 require('./bootstrap');
 require('./filters');
+require('./alerts');
 window.Vue = require('vue');
 
 import { 
