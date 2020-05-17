@@ -1,6 +1,7 @@
 require('./bootstrap');
-
+require('./filters');
 window.Vue = require('vue');
+
 import { 
     HasError,
     AlertError,
