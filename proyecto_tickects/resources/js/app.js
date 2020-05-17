@@ -1,6 +1,7 @@
 require('./bootstrap');
 require('./filters');
 require('./alerts');
+require('./router');
 window.Vue = require('vue');
 
 import { 
@@ -21,4 +22,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router
 });
