@@ -1,26 +1,31 @@
-require('./bootstrap');
-require('./filters');
-require('./alerts');
-require('./router');
-window.Vue = require('vue');
+require('./bootstrap')
+require('./filters')
+require('./alerts')
 
-import { 
-    HasError,
-    AlertError,
-    AlertErrors, 
-    AlertSuccess
-  } from 'vform'
+window.Vue = require('vue')
+
+import router from "./router"
+import { Form, HasError, AlertError } from 'vform'
+import VueProgressBar from 'vue-progressbar'
+import Vuetify from 'vuetify'
+Vue.use(Vuetify)
 
 window.Form = Form
+
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
-Vue.component(AlertErrors.name, AlertErrors)
-Vue.component(AlertSuccess.name, AlertSuccess)
 
+window.Fire = new Vue()
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.use(VueProgressBar, {
+    color: 'rgb(143, 255, 199)',
+    failedColor: 'red',
+    height: '2px'
+})
+
 
 const app = new Vue({
     el: '#app',
-    router
-});
+    router,
+    vuetify: new Vuetify()
+}).$mount('#app')
