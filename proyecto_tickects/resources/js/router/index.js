@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Developer from '../components/DeveloperComponent.vue'
 import Home from '../components/HomeComponent.vue'
 import Dashboard from '../components/DashboardComponent.vue'
 import User from '../components/UserComponent.vue'
@@ -11,6 +12,7 @@ Vue.config.productionTip = false
   { path: '/home', name: 'Home', component: Home },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/users', name: 'User', component: User },
+  { path: '/developer', name: 'Dev', component: Developer },
   // { path : '/*', redirect : '/home' }
 ]
 

@@ -1,0 +1,6 @@
+Personal access client created successfully.
+Client ID: 1
+Client secret: Ji4Pa9piTjAj7tpnJYzhXdOghhMAON0HYLcoV2nR
+Password grant client created successfully.
+Client ID: 2
+Client secret: XyUdYVVsMpNA9qpPvzUYFRTJpygJXePrB8vS6UEn
