@@ -60,7 +60,7 @@
 
     @auth
     <script>
-        window.user = @json(auth()->user());  
+        // window.user = @json(auth()->user());  
     </script>
     @endauth
     <!-- AdminLTE App -->

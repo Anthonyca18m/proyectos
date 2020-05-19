@@ -26,7 +26,7 @@
                         <v-data-table :headers="headers" :items="users" :search="search" sort-by="calories" class="elevation-1">
                             <template v-slot:top>
                                 <v-toolbar flat color="white">
-                                    <v-toolbar-title>My CRUD</v-toolbar-title>
+                                    <v-toolbar-title>Usuarios</v-toolbar-title>
                                     <v-divider class="mx-4" inset vertical></v-divider>
                                     <div class="btn-group btn-group-sm shadow-sm">
                                             <button class="btn btn-danger" title="EXPORTAR PDF">
@@ -186,7 +186,7 @@
         methods: {
             initialize() {
                 this.$Progress.start()
-                axios.get('api/user')
+                axios.get('api/moduloUser')
                     .then( ({ data }) => {
                         this.users = data.data
                         this.$Progress.finish()

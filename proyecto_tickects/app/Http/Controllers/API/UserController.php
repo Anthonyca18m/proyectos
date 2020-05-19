@@ -3,6 +3,7 @@
 namespace proyectoTickets\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use proyectoTickets\Http\Controllers\Controller;
 use proyectoTickets\User;
 
@@ -25,7 +26,17 @@ class UserController extends Controller
     public function index()
     {
         //
-        return User::latest()->paginate(10);
+        // return User::latest()->paginate(10);
+    }
+
+    public function moduloUser()
+    {
+        $test = User::all();
+
+        $response = array('data' => $test );
+
+        return $response;
+
     }
 
     /**

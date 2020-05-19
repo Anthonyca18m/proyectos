@@ -2319,7 +2319,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.$Progress.start();
-      axios.get('api/user').then(function (_ref) {
+      axios.get('api/moduloUser').then(function (_ref) {
         var data = _ref.data;
         _this.users = data.data;
 
@@ -64810,7 +64810,7 @@ var render = function() {
                           "v-toolbar",
                           { attrs: { flat: "", color: "white" } },
                           [
-                            _c("v-toolbar-title", [_vm._v("My CRUD")]),
+                            _c("v-toolbar-title", [_vm._v("Usuarios")]),
                             _vm._v(" "),
                             _c("v-divider", {
                               staticClass: "mx-4",
