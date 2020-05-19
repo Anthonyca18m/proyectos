@@ -23,7 +23,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12">
-                        <v-data-table :headers="headers" :items="users" :search="search" sort-by="calories" class="elevation-1">
+                        <v-data-table 
+                            :headers="headers" 
+                            :items="users" 
+                            :search="search" 
+                            :loading="cargando" 
+                            loading-text="Cargando datos..."
+                            class="elevation-1">
+
                             <template v-slot:top>
                                 <v-toolbar flat color="white">
                                     <v-toolbar-title>Usuarios</v-toolbar-title>
@@ -54,60 +61,137 @@
                                             hide-details
                                         ></v-text-field>
                                     <v-spacer></v-spacer>
-                                    <v-dialog v-model="dialog" max-width="500px">
-                                        <template v-slot:activator="{ on }">
-                                            <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
-                                        </template>
-                                        <v-card>
-                                            <v-card-title>
-                                                <span class="headline">{{ formTitle }}</span>
-                                            </v-card-title>
-
-                                            <v-card-text>
-                                                <v-container>
-                                                    <v-row>
-                                                        <v-col cols="12" sm="6" md="4">
-                                                            <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" sm="6" md="4">
-                                                            <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" sm="6" md="4">
-                                                            <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" sm="6" md="4">
-                                                            <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                                                        </v-col>
-                                                        <v-col cols="12" sm="6" md="4">
-                                                            <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-                                                        </v-col>
-                                                    </v-row>
-                                                </v-container>
-                                            </v-card-text>
-
-                                            <v-card-actions>
-                                                <v-spacer></v-spacer>
-                                                <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-                                                <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-                                            </v-card-actions>
-                                        </v-card>
-                                    </v-dialog>
+                                    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#UserModal">
+                                        Agregar <i class="fas fa-user-plus"></i> 
+                                    </button>
                                 </v-toolbar>
                             </template>
+
+                            <template v-slot:item.p_name="{ item }">
+                             {{ item.p_name }} {{ item.p_paterno }} {{ item.p_materno }}
+                            </template>
+
+                            <template v-slot:item.created_at="{ item }">
+                             {{ item.created_at | mydate }} 
+                            </template>
+
+                            <template v-slot:item.s_descripcion="{ item }">
+                                <v-chip :color="getStatusColor(item.id_states)" dark>{{ item.s_descripcion }}</v-chip>
+                            </template>
+
                             <template v-slot:item.actions="{ item }">
-                                <v-icon small class="mr-2" @click="editItem(item)">
+                                <v-icon small class="mr-2" @click="editUser(item)">
                                     mdi-pencil
                                 </v-icon>
-                                <v-icon small @click="deleteItem(item)">
+                                <v-icon small @click="deleteUser(item)">
                                     mdi-delete
                                 </v-icon>
                             </template>
                             <template v-slot:no-data>
-                                <v-btn color="primary" @click="initialize">Reset</v-btn>
+                                <v-btn color="primary" @click="loadUsers">Recargar</v-btn>
                             </template>
                         </v-data-table>
                     </div>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Agregar Usuario</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form @submit.prevent="createUser()" autocomplete="off" >
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="font-weight-normal">Nombre: </label>
+                                                <input type="text" name="name" placeholder="Ingrese nombres"
+                                                v-model="form.name" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                                <has-error :form="form" field="Nombre"></has-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="font-weight-normal">Apellido Paterno: </label>
+                                                <input type="text" name="paterno" placeholder="Ingrese ap. paterno"
+                                                v-model="form.paterno" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                                <has-error :form="form" field="Ap. Paterno"></has-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="font-weight-normal">Apellido Materno: </label>
+                                                <input type="text" name="materno" placeholder="Ingrese ap. materno"
+                                                v-model="form.materno" class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                                                <has-error :form="form" field="Ap. Materno"></has-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="font-weight-normal">Tipo: </label>
+                                                <select name="type" class="form-control"
+                                                v-model="form.type" :class="{ 'is-invalid': form.errors.has('type') }">
+                                                    <option value="" selected disabled>Seleccionar tipo</option>
+                                                </select>
+                                                <has-error :form="form" field="Tipo"></has-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="font-weight-normal">Género: </label>
+                                                <select name="type" class="form-control"
+                                                v-model="form.type" :class="{ 'is-invalid': form.errors.has('type') }">
+                                                    <option value="" selected disabled>Seleccionar género</option>
+                                                    <option value="M">Hombre</option>
+                                                    <option value="F">Mujer</option>
+                                                </select>
+                                                <has-error :form="form" field="Tipo"></has-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="font-weight-normal">Email: </label>
+                                                <input type="email" name="email" placeholder="Ingrese email"
+                                                v-model="form.email" class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
+                                                <has-error :form="form" field="email"></has-error>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="font-weight-normal">Contraseña: </label>
+                                                <input type="password" name="password"
+                                                v-model="form.password" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
+                                                <has-error :form="form" field="password"></has-error>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label class="font-weight-normal">Repetir Contraseña: </label>
+                                                <input type="password" name="rpassword"
+                                                v-model="form.rpassword" class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
+                                                <has-error :form="form" field="r-password"></has-error>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-success" :disabled="form.busy">Registrar</button>
+                                </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
 
@@ -118,111 +202,59 @@
     export default {
         data() {
             return {
+                cargando : true,
                 search: '',
                 dialog: false,
-                headers: [{
-                        text: 'Dessert (100g serving)',
-                        align: 'start',
-                        sortable: false,
-                        value: 'name',
-                    },
-                    {
-                        text: 'Calories',
-                        value: 'calories'
-                    },
-                    {
-                        text: 'Fat (g)',
-                        value: 'fat'
-                    },
-                    {
-                        text: 'Carbs (g)',
-                        value: 'carbs'
-                    },
-                    {
-                        text: 'Protein (g)',
-                        value: 'protein'
-                    },
-                    {
-                        text: 'Actions',
-                        value: 'actions',
-                        sortable: false
-                    },
+                headers: [
+                    { text: 'Nombre Completo', value: 'p_name', /*sortable: false , value: 'name'*/ },
+                    { text: 'Gmail / Usuario', value: 'c_mail' },
+                    { text: 'N° Celular', value: 'c_phone' },
+                    { text: 'Tipo de Usuario', value: 'at_description' },
+                    { text: 'Estado', value: 's_descripcion' },
+                    { text: 'Fecha de Registro', value: 'created_at' },
+                    { text: 'Acciones', value: 'actions', sortable: false },
                 ],
                 users: [],
-                editedIndex: -1,
-                editedItem: {
+                form: new Form({
+                    id: '',
                     name: '',
-                    calories: 0,
-                    fat: 0,
-                    carbs: 0,
-                    protein: 0,
-                },
-                defaultItem: {
-                    name: '',
-                    calories: 0,
-                    fat: 0,
-                    carbs: 0,
-                    protein: 0,
-                },
+                    paterno: '',
+                    materno: '',
+                    type: '',
+                    email: '',
+                    password: '',
+                    rpassword: '',
+                }),
             }
         },
-
-        computed: {
-            formTitle() {
-                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-            },
-        },
-
-        watch: {
-            dialog(val) {
-                val || this.close()
-            },
-        },
-
         created() {
-            this.initialize()
+            this.loadUsers()
         },
-
         methods: {
-            initialize() {
+            loadUsers() {
                 this.$Progress.start()
                 axios.get('api/moduloUser')
                     .then( ({ data }) => {
                         this.users = data.data
+                        this.cargando = false
                         this.$Progress.finish()
                     }, (data) => {
-                        console.log(data) 
                         this.$Progress.fail()
                     })
                 
             },
 
-            editItem(item) {
-                this.editedIndex = this.users.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
+            editUser(item) {
+                
             },
 
-            deleteItem(item) {
-                const index = this.users.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.users.splice(index, 1)
+            deleteUser(item) {
+                
             },
-
-            close() {
-                this.dialog = false
-                this.$nextTick(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem)
-                    this.editedIndex = -1
-                })
-            },
-
-            save() {
-                if (this.editedIndex > -1) {
-                    Object.assign(this.users[this.editedIndex], this.editedItem)
-                } else {
-                    this.users.push(this.editedItem)
-                }
-                this.close()
+            getStatusColor (status) {
+                if (status == 2) return 'red'
+                else if (status == 3) return 'orange'
+                else return 'green'
             },
         }
     }

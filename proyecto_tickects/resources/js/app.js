@@ -18,9 +18,9 @@ Vue.component(AlertError.name, AlertError)
 window.Fire = new Vue()
 
 Vue.use(VueProgressBar, {
-    color: 'rgb(143, 255, 199)',
+    color: 'rgb(0, 54, 255)',
     failedColor: 'red',
-    height: '2px'
+    height: '3px'
 })
 
 Vue.component( 'passport-clients', require('./components/passport/Clients.vue').default );

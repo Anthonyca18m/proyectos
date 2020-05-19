@@ -31,9 +31,14 @@ class UserController extends Controller
 
     public function moduloUser()
     {
-        $test = User::all();
+        $users = User::join("persons","users.id","=","persons.id_account")
+                        ->join('account_types', 'users.id_account_types', '=', 'account_types.id_account_types')
+                        ->join('contacts', 'persons.id_contacts', '=', 'contacts.id_contacts')
+                        ->join('document_types', 'persons.id_document_types', '=', 'document_types.id_document_types')
+                        ->join('states', 'users.id_states', '=', 'states.id_states')
+                        ->get();
 
-        $response = array('data' => $test );
+        $response = array('data' => $users );
 
         return $response;
 
